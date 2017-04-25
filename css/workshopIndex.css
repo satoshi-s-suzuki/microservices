@@ -1,12 +1,17 @@
 #labguide {
-    max-width: 55rem; 
-    margin: 0 auto; 
-    padding: 3.25rem; 
-    font-family: 'Open Sans Condensed', sans-serif; 
+    max-width: 55rem;
+    margin: 0 auto;
+    padding: 3.25rem;
+    font-family: 'Open Sans Condensed', sans-serif;
     font-weight: 300;
 }
 
 body {
-    padding: 0; 
+    padding: 3.25rem 0 0 0;
     max-width:100%;
+}
+
+md-toolbar {
+  top:0;
+  position:fixed;
 }
