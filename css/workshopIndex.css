@@ -15,3 +15,7 @@ md-toolbar {
   top:0;
   position:fixed;
 }
+
+md-content{
+  margin-top: 3.25rem;
+}
