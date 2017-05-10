@@ -2,155 +2,158 @@
 ![](images/100/Picture100-lab.png)  
 Update: March 31, 2017
 
-## 前書き
+## Introduction
 
-これは、**Oracle Cloud Native Microservicesワークショップ**の一部であるいくつかのラボの最初のものです。このワークショップでは、いくつかのマイクロサービスを作成して使用するクラウド・ネイティブ・プロジェクトのソフトウェア開発ライフサイクル（SDLC）を紹介します。
+このハンズオンラボは**Oracle Public Cloud DevOps Cloud Native Microservices workshop**の一つ目のラボです。このラボではソフトウェア開発ライフサイクル(Software Development Lifecycle (SDLC))の流れを複数のマイクロサービスを作成・利用するクラウドネイティブプロジェクト通して理解していきます。
 
-あなたは1人のユーザーとしてログインしますが、ワークショップでは3人のペルソナが必要です。**プロジェクト・マネージャ・ペルソナ**は、プロジェクトを作成する上で作業するためのタスクや機能の追加、および開発者にタスクを割り当てます。プロジェクトマネージャーは、最初のスプリントを開始します。**Java開発者ペルソナ**は、Twitterデータの取得とフィルタリングを可能にする新しいTwitterフィードサービスを開発します。**JavaScriptの開発者のペルソナ**は、分析を可能にするためにTwitterのデータを表示する新しいTwitterのマーケティングのUIを開発します。このワークショップでは、Oracle Developer Cloud ServiceおよびOracle Application Container Cloud Serviceにアクセスする予定です。
+ハンズオンラボでは一人のユーザとしてログインし作業を進めますが、下記3人のユーザの作業を行います。このハンズオンでは**Oracle Developer Cloud Service**と**Oracle Application Container Cloud Service**を使用し、アプリケーション開発を行います。
 
-***問題を記録するには***、ここをクリックして [github oracle](https://github.com/oracle/cloud-native-devops-workshop/issues/new) リポジトリの問題提出フォームにアクセスしてください。
+- **プロジェクトマネージャ**<br>
+  プロジェクトの作成、行なうタスクの追加、開発者へのタスクのアサインを行い、Sprintを開始します。
 
-## 目標
-- 初期プロジェクトを作成する
-    - プロジェクトにユーザーを追加する
-- 製品の問題を作成する
-    - Twitterフィード・マイクロサービスの問題を作成する
-    - Twitterフィード・マーケティングUIの問題を作成する
-- アジャイルボードと初期スプリントを作成する
-- スプリントに問題を追加する
+- **Java開発者**<br>
+  twitterのデータ取得・フィルタリングが出来るtwitterフィードサービスの開発を行います。
 
-## 必要な成果物
-- 次のラボでは、インストラクターが提供するOracle Public Cloudアカウントが必要です。
+- **JavaScript開発者**<br>
+  twitterデータ分析のためのtwitterマーケティング画面を作成します。
 
 
-# Twitterフィード・マーケティング・プロジェクトを作成する
+## ゴール
+- プロジェクトを作成
+    - プロジェクトへユーザを追加
+- Issueを作成
+    - TwitterフィードマイクロサービスのIssueを作成
+    - TwitterフィードマーケティングUIのIssueを作成
+- Agile BoardとSprintを作成
+- Sprintへタスクを追加
 
-## 開発者向けクラウド・サービス・プロジェクトの作成
+## 前提条件
+- Oracle Public Cloud環境にアクセスが出来ること
 
-### **ステップ1**: Oracle Cloudアカウントにログインします。
-- どのブラウザからでも構わないので、次のURLにアクセスします:
-    `https://cloud.oracle.com`
 
-- ブラウザの右上にある **サインイン** をクリックします
+# Twitterフィードマーケティングプロジェクトの作成
+
+## Developer Cloud Serviceでプロジェクトを作成
+
+### **STEP 1**: Oracle Cloudアカウントへログイン
+- [**こちら**](https://cloud.oracle.com)からOracle Cloudホームページへ移動します。
+
+- 右上の**Sigin In**をクリックします。
 
     ![](images/100/Picture100-1.png)
 
-- **重要** - マイサービスでは、ドロップダウンリストから正しいデータセンターを選択し、**My Services**をクリックします。どのデータセンターを選択するか不明な場合には、対面式のトレーニング・イベントですので、ドロップダウン・リストからどの**リージョン**を選択するか***インストラクタに確認してください***。Oracle Trialを使用してアカウントを受け取った場合は、試用確認メールに地域を事前に選択するURLが記載されています。
+- アカウント作成時に割り当てられたData Centerを選択し、**My Services** をクリックします。Data Centerの情報はトライアルアカウントの通知メールに記載があります。
 
     ![](images/100/Picture100-2.png)
 
-- アイデンティティ・ドメインを入力し、**Go**をクリックします。
+- Identity Domain名を入力し、**Go** をクリックします。**Identity Domain名, ユーザ名, パスワード** はトライアルアカウントの通知メールに記載があります。
 
     ![](images/100/Picture100-3.png)
 
-- アイデンティティ・ドメインが設定されたら、ユーザー名とパスワードを入力して「**サインイン**」をクリックします。
+- Identity Domainがセットされたら、ユーザ名・パスワードを入力し、**Sign In** をクリックします。
 
-  **メモ:** このラボでは、プロジェクト・マネージャ、***Lisa Jones***の役割を引き受けます。Lisa Jonesのアイデンティティを前提としていますが、インストラクタから提供された**ユーザー名**か、会社から与えられた**ユーザー名**、またはOracle Trialの一部としてお客様に提供された**ユーザー名**を使用してアカウントにログインします。ワークショップを進めていくうちに、あなたは1人のユーザーとしてログインしたままになりますが、プロジェクト・マネージャーのLisa Jonesから他のペルソナへの「論理ユーザー」の変更もなされます。
+  **NOTE:** このハンズオンではLisa,Bala,Johnの3人の作業が出てきますが、ハンズオンを進めるユーザーアカウントは**Trial登録時に作成したユーザアカウントのみ**を使用して進めます。
 
     ![](images/lisa.png)
 
     ![](images/100/Picture100-3.5.png)
 
-- このアカウントで利用できるさまざまなクラウドサービスを表示するダッシュボードが表示されます。
+- ログインが成功すると、トライアルアカウントで使用可能なクラウドサービスの一覧が表示されたダッシュボード画面へ移動します。
 
     ![](images/100/Picture100-4.png)
 
-- **[ダッシュボードのカスタマイズ]**を**クリック**して、サービスをダッシュボードに追加します。**[Show]**を選択すると、サービスが追加されます。このワークショップでは、**Application Container、Developer、Storage**のクラウドサービスを確実に表示する必要があります。
+- このハンズオンでは**Application Container、Developer and Storage、Storage**を使用しますので、それらがダッシュボード表示されていない場合、**Customize Dashboard** をクリックし、サービス名の横の**Show**を選択してダッシュボードにサービスパネルを表示させます。
 
     ![](images/100/Picture100-5.png)
 
-### **ステップ2**: オプションのストレージ複製ポリシーのチェック/設定
+### **STEP 2**: ストレージレプリケーションポリシーの確認・設定
 
-***次のいずれかが当てはまる場合は、この手順をスキップします。***
+***こちらはハンズオンセットアップガイドに含まれる手順と同様のものですので、すでにレプリケーションポリシーの設定が完了している方は実施不要です。***
 
-- あなたはOracleスポンサーイベントに参加しており、**インストラクターはあなたにアカウントを提供しました**。これらのアカウントにはすでにポリシーが設定されています。
-
-- **個人用の試用アカウント**にサインアップし、既に試用ポリシーを設定している**試用アカウント生徒用ガイド**を完了した。
-
-***上記に該当しない場合***は、次の手順に従ってストレージ複製ポリシーを設定する必要があります。
-
-- **Storage**クラウド・サービスをクリックします
+- **Storage クラウドサービス** をクリックします。
 
     ![](images/100/Picture-01.png)
 
-- 画面上部の**Open Service Console**アイコンをクリックします
+- 右上の**Open Service Console** をクリックします。
 
     ![](images/100/Picture-01.5.png)
 
-- 後続のダイアログが表示された場合、レプリケーション・ポリシーは変更できないため、その設定には注意が必要です。デフォルトを選択し、**[Set Policy]**ボタンをクリックします。メッセージが表示されない場合、レプリケーション・ポリシーはすでに設定されており、使用するクラウド・アカウントはワークショップの準備ができています。
+- 下記の画面が表示されたら、デフォルト設定のまま**Set Policy** をクリックします。画面が表示されない場合、レプリケーションポリシーは既に設定されているので、追加の設定は必要ありません。
 
     ![](images/100/Picture-02.5.png)
 
-- ブラウザの[戻る]ボタンをクリックし、**[Dashboard]**ボタンをクリックしてメインダッシュボードに戻ります。
+- ストレージレプリケーションポリシーの設定が完了しました。
 
     ![](images/100/Picture-04.png)
 
-### **ステップ3**: Developer Cloud Serviceにログインする
+### **STEP 3**: Developer Cloud Serviceへのログイン
 
-Oracle Developer Cloud Serviceは、チーム開発プロセスを合理化し、ソフトウェアのデプロイを自動化する完全な開発プラットフォームを提供します。統合プラットフォームには、問題追跡システム、アジャイル開発ダッシュボード、コードのバージョン管理とレビュー・プラットフォーム、継続的な統合と配信の自動化、およびWikiやライブ・アクティビティ・ストリームなどのチーム・コラボレーション機能が含まれます。豊富なWebベースのダッシュボードと一般的な開発ツールとの統合により、Oracle Developer Cloud Serviceはより優れたアプリケーションをより迅速に提供します。
+Oracle Developer Cloud Serviceは、チーム開発プロセスを合理化し、ソフトウェアのデプロイを自動化する開発プラットフォームを提供します。統合プラットフォームには、課題管理システム、アジャイル開発ダッシュボード、コードのバージョン管理とレビュー・プラットフォーム、継続的な統合と配信の自動化、およびWikiやライブ・アクティビティ・ストリームなどのチーム・コラボレーション機能が含まれます。豊富なWebベースのダッシュボードと一般的な開発ツールとの統合により、Oracle Developer Cloud Serviceはより優れたアプリケーションをより迅速に提供します。
 
-- クラウドUIダッシュボードから、**Developer**サービスをクリックします。この例では、Developer Cloud Serviceの名前は**developer99019**です。
+
+- ダッシュボードから **Developer** を選択します。手順の例ではDeveloper Cloud Service の名前が**developer99019**となっています。
+
     ![](images/100/Picture100-6.png)
 
-- [Service Details]ページでは、サービスの状態の概要をすばやく確認できます。
+- Service Detailsページでは、サービスの状態の概要が確認できます。
 
     ![](images/100/Picture100-7.png)
 
-- Oracle Developer Cloud Serviceの**Open Service Console**をクリックします。サービス・コンソールには、現在メンバーとなっているすべてのプロジェクトが一覧表示されます。
+- **Open Service Console** をクリックして、Developer Cloud Serviceのダッシュボードへ移動します。ダッシュボードのトップ画面には現在メンバーとなっている全てのプロジェクトが表示されます。
 
     ![](images/100/Picture100-7.5.png)
 
-### **ステップ4**: Developer Cloud Serviceのプロジェクトを作成する
+### **STEP 4**: プロジェクトの作成
 
-- [ **New Project** ]をクリックして、プロジェクト作成ウィザードを開始します。
+- **New Project** をクリックして、プロジェクト作成ウィザードを開始します。
 
     ![](images/100/Picture100-8.png)
 
-- 詳細画面で以下のデータを入力し、**Next**をクリックします。
+- **Project Details** 画面では下記の情報を入力して、**Next**をクリックします。
 
     **Name:** `Twitter Feed Marketing Project`
 
     **Description:** `Project to gather and analyze twitter data`
 
-    **メモ:** Privateプロジェクトはあなただけが見ることができます。Sharedプロジェクトは、すべてのDeveloper Cloudユーザーに表示されます。いずれの場合でも、プロジェクトと対話するためには、プロジェクトにユーザーを追加する必要があります。
+    **Note:** Privateプロジェクトは自分だけが見ることができます。Sharedプロジェクトは、すべてのDeveloper Cloudユーザーに表示されます。いずれの場合でも、プロジェクトに参加するためには、プロジェクトにユーザーが追加されている必要があります。
 
     ![](images/100/Picture100-9.png)
 
-- デフォルトのテンプレートを[**Empty Project*]に設定したままにして、[ **Next** ]をクリックします。
+- **Template** 画面ではデフォルトの **Empty Project** のまま、**Next** をクリックします。
 
     ![](images/100/Picture100-10.png)
 
-- **Wiki Markup**プリファレンスを**MARKDOWN**に設定し、[ **Finish** ]をクリックします。
+- **Project Properties** 画面では**Wiki Markup** で**MARKDOWN** を選択し、**Finish** をクリックします。
 
     ![](images/100/Picture100-11.png)
 
-- プロジェクトの作成には約1分かかります。
+- 数分でプロジェクトの作成が完了します。
 
     ![](images/100/Picture100-12.png)
 
-- これで、ソフトウェア開発を管理できる新しいプロジェクトができました。
+- これでソフトウェア開発を管理するためのプロジェクトの作成が完了しました。
 
     ![](images/100/Picture100-13.png)
 
 
 
-# 製品のissueを作成する
+# Issueの作成
 
-## Twitterフィード・マイクロサービスのissueを作成する
+## TwitterフィードマイクロサービスのIssueの作成
 
-### **ステップ5**: 初期GITリポジトリ作成のissueを作成する
+### **STEP 5**: Issue「初期Gitリポジトリ作成(Create Initial GIT Repository for Twitter Feed Service)」の作成
 
-このステップでは、まだプロジェクト・マネージャ、**Lisa Jones**のアイデンティティを引き継いでいます。
+このSTEPでは引き続きプロジェクト管理者の**Lisa Jones**のタスクを行います。
 
 ![](images/lisa.png)
 
-- 左側のナビゲーションパネルで[ **Issues** ]をクリックすると、Track Issuesページが表示されます。
+- 左側のナビゲーションパネルで**Issues**をクリックすると、Track Issuesページを表示します。
 
     ![](images/100/Picture100-16.png)
 
-- [ **New Issue** ]をクリックします。[新しい問題]ページに次のデータを入力し、[ **Create Issue** ]をクリックします。
+- **New Issue**をクリックして新しいIssueを作成します。New Issueには下記のデータを入力し、**Create Issue**をクリックします。(※このIssueは論理的にBala Guptaが所有します。)
 
-    **メモ:** このハンズオン・ラボでは、問題の「物理的な」所有者として自分のアカウントを割り当てますが、このワークショップのために、**Bala Gupta**は次の問題の「論理的な」所有者になります。
+    **Note:** このハンズオン・ラボは1ユーザで進めるため、TrialアカウントのユーザをIssueの物理的な所有者として割り当てます。実際の開発では**Bala Gupta** のような各担当者のユーザを所有者として割り当てます。
 
     ![](images/bala.png)
 
@@ -166,13 +169,13 @@ Oracle Developer Cloud Serviceは、チーム開発プロセスを合理化し�
 
     **Story Points:** `1`
 
-    メモ: ストーリー・ポイントは、Scrumチームが使用する任意の尺度です。ストーリーを実装するのに必要な労力を測定するために使用されます。この[サイト](https://agilefaq.wordpress.com/2007/11/13/what-is-a-story-point/) に、より詳細な情報が記載されています。
+    Note: ストーリー・ポイントは、Scrumチームが使用する任意の尺度です。ストーリーを実装するのに必要な労力を測定するために使用されます。[こちら](https://agilefaq.wordpress.com/2007/11/13/what-is-a-story-point/) により詳細な情報が記載されています。
 
     ![](images/100/Picture100-17.png)
 
-### **ステップ6**: Twitter資格情報の更新のissueを作成する
+### **STEP 6**: Issue「Twitterフィードフィルター作成(Create Filter on Twitter Feed)」の作成
 
-- **New Issue**をクリックします。[New Issue]ページに次のデータを入力し、[ **Create Issue** ]をクリックします。
+- **New Issue**をクリックして新しいIssueを作成します。New Issueには下記のデータを入力し、**Create Issue** をクリックします。(※このIssueは論理的にBala Guptaが所有します。)
 
     ![](images/bala.png)
 
@@ -188,9 +191,9 @@ Oracle Developer Cloud Serviceは、チーム開発プロセスを合理化し�
 
     ![](images/100/Picture100-18.png)
 
-### **ステップ7**: 初期GITリポジトリ作成のissueを作成する
+### **STEP 5**: Issue「初期Gitリポジトリ作成(Create Initial GIT Repository for Twitter Feed Marketing UI)」の作成
 
-- [ **New Issue** ]をクリックします。[ New Issue ]ページに次のデータを入力し、[ **Create Issue** ]をクリックします。メモ：次の2つのissueは、論理的にJohn Dunbarが所有します。
+- **New Issue**をクリックして新しいIssueを作成します。New Issueには下記のデータを入力し、**Create Issue** をクリックします。(※このIssueは論理的にJohn Dunbarが所有します。)
 
     ![](images/john.png)
 
@@ -206,9 +209,9 @@ Oracle Developer Cloud Serviceは、チーム開発プロセスを合理化し�
 
     ![](images/100/Picture100-19.png)
 
-### **ステップ8**: Twitterフィードを表示するためのissueを作成する
+### **STEP 8**: Issue「Twitterフィードを表示(Display Twitter Feed in Table Format)」の作成
 
-- [ **New Issue** ]をクリックします。[New Issue]ページに次のデータを入力し、[ **Create Issue** ]をクリックします。
+- **New Issue**をクリックして新しいIssueを作成します。New Issueには下記のデータを入力し、**Create Issue** をクリックします。(※このIssueは論理的にJohn Dunbarが所有します。)
 
     ![](images/john.png)
 
@@ -224,31 +227,31 @@ Oracle Developer Cloud Serviceは、チーム開発プロセスを合理化し�
 
     ![](images/100/Picture100-20.png)
 
-- ウィンドウの**左側**にある戻る矢印 ![](images/100/Picture100-21.png) をクリックするか、[ **Issues** ] メニュー・オプションをクリックして、新しく作成されたすべてのissueを表示します。
+- ウィンドウの**左側**にある戻る矢印 ![](images/100/Picture100-21.png) をクリックするか、左側のナビゲーションパネルの**Issues**をクリックして、新しく作成されたすべてのIssueを表示します。
 
     ![](images/100/Picture100-22.png)
 
-# アジャイルボードの作成
+# Agile Boardの作成
 
-## アジャイルボードと初期スプリントを作成する
+## Agile Boardと初期Sprintの作成
 
-### Developer Cloud Serviceのアジャイルページの概要
+### Developer Cloud ServiceのAgileページの概要
 
-Oracle Developer Cloud ServiceでAgileメソドロジを使用する前に、Agileページの次の主要コンポーネントを理解することが重要です。
+Oracle Developer Cloud ServiceでAgile開発を開始する前に、Agileページの次の主要コンポーネントを理解することが重要です。
 
-- **Board** – ボードは、プロジェクトのissueを表示および更新するために使用されます。ボードを作成するときは、それをIssue Queryに関連付けます。ボードは、クエリによって返されたissueを表示します。チームメンバーが作成したボードを使用することも、独自のボードを作成することもできます。好きなだけ多くのボードを作ることができます。
-- **Sprint** – スプリントは、チームメンバーが製品コンポーネントを実装しようとする短い期間（通常、1週間または2週間）です。製品コンポーネントに関連するissueをSprintに追加します。製品コンポーネントの作業を開始すると、関連するSprintを起動（またはアクティブ化）します。スプリントを使用してissueを更新するには、まずスプリントをアクティブにし、アクティブ・スプリント・ビューにスプリントを追加する必要があります。
-- **Backlog view** – ボードのクエリによって返されたすべてのissueを一覧表示します。このビューには、ボードのアクティブおよび非アクティブのすべてのスプリントと、ボードのクエリに一致するissueを含む他のボードのスプリントも表示されます。各Sprintには、追加されたissueが一覧表示されます。バックログ・セクション（バックログページの最後のセクション）には、まだスプリントに属していない未解決のissueがすべて一覧表示されます。バックログビューには解決されたissueとクローズされたissueは表示されません。
-- **Active Sprints view** – ボードのすべてのアクティブなスプリントを一覧表示し、ステータスをドラッグ＆ドロップするだけでissueステータスを更新することができます。
-- **Reports view** – [Burndown Chart]タブを選択してSprintに残す作業量を表示するか、[Sprint Report]タブを使用してSprintの開かれたissueおよび完了した問題を一覧表示します。
+- **Board** – BoardはプロジェクトのIssueを表示および更新するために使用されます。Boardを作成するときは、それをIssue Queryに関連付けます。Boardはクエリによって返されたIssueを表示します。チームメンバーが作成したBoardを使用することも、独自のBoardを作成することもできます。必要な数のBoardを作ることができます。
+- **Sprint** – Sprintは、チームメンバーが製品コンポーネントを実装する期間（通常、1週間または2週間）です。製品コンポーネントに関連するIssueをSprintに追加します。製品コンポーネントの作業を開始すると、関連するSprintを起動（またはアクティブ化）します。Sprintを使用してIssueを更新するには、まずSprintをアクティブにし、Active SprintビューにSprintを追加する必要があります。
+- **Backlogビュー** – Boardのクエリによって返されたすべてのIssueを一覧表示します。このビューにはBoardに含まれるすべてのSprint(アクティブおよび非アクティブ)と、Boardのクエリに一致するIssueを含む他のBoardのSprintも表示されます。各Sprintには、追加されたIssueが一覧表示されます。Backlogセクション(Backlogビューの最後のセクション)には、まだSprintに属していない未解決のIssueがすべて一覧表示されます。Backlogビューには解決されたIssueとクローズされたIssueは表示されません。
+- **Active Sprintsビュー** – BoardのすべてのアクティブなSprintを一覧表示し、ステータスをドラッグ＆ドロップするだけでIssueステータスを更新することができます。
+- **Reportsビュー** – **Burndown Chartタブ**を選択してSprintの残作業の量を表示するか、**Sprint Report** タブを使用してSprintの完了および完了していないIssueを一覧表示します。
 
-### **ステップ9**: アジャイルボードを作成する
+### **STEP 9**: Agile Boardの作成
 
-- 左サイドメニューの**Agile**をクリックすると、既存のボードをすべて一覧表示するページが表示されます
+- 左側のナビゲーションパネルの**Agile**をクリックして、既存のBoardが一覧表示されているページを表示します。
 
     ![](images/100/Picture100-23.png)
 
-- [ **New Board** ]をクリックし、以下のデータを入力します。完了したら、[ **Create** ]をクリックします。
+- **New Board**をクリックし、下記のデータを入力し、**Create**をクリックします。
 
   **Name:** `Microservices`
 
@@ -256,8 +259,8 @@ Oracle Developer Cloud ServiceでAgileメソドロジを使用する前に、Agi
 
     ![](images/100/Picture100-24.png)
 
-### **ステップ10**: スプリントを作成する
-- 最初のスプリントを作ってみます。[ **New Sprint** ]をクリックします。次のデータを入力し、[ **OK** ]をクリックします。
+### **STEP 10**: Sprintの作成
+- 最初のSprintを作成します。**New Sprint**をクリック、下記のデータを入力し、**OK**をクリックします。
 
     **Name:** `Sprint 1 - Initial Development`
 
@@ -265,60 +268,60 @@ Oracle Developer Cloud ServiceでAgileメソドロジを使用する前に、Agi
 
     ![](images/100/Picture100-25.png)
 
-### **ステップ11**:	バックログのissueをスプリントに追加する
+### **STEP 11**:	BacklogのIssueをSprintに追加
 
-- 次に、新たに作成されたスプリントにバックログの問題を追加します。**Sprint 1**セクションに**4つのissue**を一度に1つずつ**ドラッグ＆ドロップ**します。これにより、問題がスプリントに追加されます。
+- 次に、新たに作成されたSprintにBacklogのIssueを追加します。**Sprint 1**セクションに**4つのIssue**を一度に1つずつ**ドラッグ＆ドロップ**して、SprintにIssueを追加します。
 
     ![](images/100/Picture100-26.png)
 
     ![](images/100/Picture100-27.png)
 
-## アジャイルボードのカスタマイズ
+## Agile Boardのカスタマイズ
 
-### **ステップ12**: ボードをカスタマイズする
+### **STEP 12**: Agile Boardのカスタマイズ
 
-次のステップでは、アジャイルボードをカスタマイズし、新しい進捗状態を追加します。状態や条件についてのより詳細な情報が必要な場合には、この[リンク](http://www.oracle.com/webfolder/technetwork/tutorials/obe/cloud/developer/AgileDevelopment/AgileDevelopment.html)に、チュートリアルがあります。
+次のステップでは、アジャイルボードをカスタマイズし、新しい進捗状態を追加します。状態や条件についてのより詳細な情報が必要な場合には、[こちら](http://www.oracle.com/webfolder/technetwork/tutorials/obe/cloud/developer/AgileDevelopment/AgileDevelopment.html)に、チュートリアルがあります。
 
-- ここでは、ボードのカスタマイズ方法を紹介します。右側で、[ **Board** ] → [ **Configure** ]をクリックします。
+- ここでは、ボードのカスタマイズ方法を紹介します。右上の**Board**をクリックし、プルダウンから**Configure**をクリックします。
 
     ![](images/100/Picture100-28.png)
 
-  **メモ**: 新しい進捗状態を作成する前に、新しい状態で使用されるいくつかの条件の割り当てを解除する必要があります。新しい条件を追加したり条件を削除することはできませんが、プロジェクトのニーズに合わせて進捗状況を再定義したり、ある状態から別の状態に条件を移行したりすることができます。Completed状態には、デフォルトで多数の条件が割り当てられています。
+  **メモ**: 新しい**Progress State**を作成する前にいくつかのConditionの割り当てを解除する必要があります。IssueのConditionを追加・削除することはできませんが、Progress StateのConditionを変更することでプロジェクトのニーズに合わせて使用することができます。デフォルトではCompletedのConditionに大半のConditionが割り当てられています。
 
-- [ **Progress States** ]して、[ **Completed** ]状態をクリックします。ウィンドウの左下のパネルでは、条件を下にスクロールし、すべての**RESOLVED条件**を選択します。![](images/100/PictureGreater.png) をクリックして、割り当てられていない条件パネルに移動しますI。
+- **Progress States**をクリックして、左側の一覧から**Completed** をクリックします。**Conditions**ボックス内のすべての**RESOLVED条件** を選択します。![](images/100/PictureGreater.png) をクリックして、**Unassigned Conditions**ボックスに移動します。
 
     ![](images/100/Picture100-29.png)
 
-- [ **New Progress State** ]をクリックします。[ **Name** ]を[ **Verify Code** ]に変更します。QAとテストを実行するためにこの新しい状態を使用します。
+- 左上の**New Progress State**をクリックします。**Name**を**Verify Code**に変更します。QAとテストを実行するためにこのProgress Stateを使用します。
 
     ![](images/100/Picture100-30.png)
 
-- **RESOLVED**の未解決の条件をすべて強調表示し、![](images/100/PictureLess.png)をクリックして条件列に移動します。
+- **Unassigned Conditions**ボックス内の**RESOLVED**の条件をすべて選択し、![](images/100/PictureLess.png)をクリックして**Conditions** ボックスに移動します。
 
     ![](images/100/Picture100-31.png)
 
-- [ **Verify Code** ]が強調表示されているので、![](images/100/PictureUpArrow.png)をクリックして [ **Verify Code** ]を上の完了済みプロセス状態に移動します。これは、タスクが進行する順序を決定するため、重要なステップです。  
+- **Verify Code** を選択し、左上に表示される![](images/100/PictureUpArrow.png)をクリックして、**Verify Code** を**Completed**の上に移動します。これはタスクが進行する順序を決定するための重要なステップです。  
 
     ![](images/100/Picture100-32.png)
 
-- [ **Save** ]をクリックして変更を維持します。
+- 右上の**Save**をクリックして変更を保存します。
 
     ![](images/100/Picture100-33.png)
 
-### **ステップ13**: スプリントを開始する
+### **STEP 13**: Sprintの開始
 
-- [ **Start Sprint** ]ボタンをクリックします。
+- **Sprint 1**の右側の**Start Sprint**をクリックします。
 
-- デフォルトのままにして、[ **Start** ]をクリックします。
+- デフォルト設定のまま、**Start** をクリックします。
 
     ![](images/100/Picture100-34.png)
 
-- [ **Active Sprints** ]をクリックして、スプリントダッシュボードを表示します。
+- **Active Sprints** をクリックして、スプリントダッシュボードを表示します。
 
     ![](images/100/Picture100-35.png)
 
-- [ **Reports** ]ボタンをクリックして、バーンダウンとスプリントのレポートを表示します。
+- **Reports**ボタンをクリックして、**Barndown Chart**と**Sprint Report** を表示します。
 
     ![](images/100/Picture100-36.png)
 
-- これで、次のラボに移動する準備が整いました
+- ここまででLab100は完了です。Lab200に進んでください。
